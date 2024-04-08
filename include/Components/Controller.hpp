@@ -2,62 +2,77 @@
 #include <iostream>
 #include <cmath>
 
-struct Controller {
+class Controller : public Component {
 
-    const float rotationDamping = 0.025;
-    const float linearForce = 0.25f;
-    const float torque = 0.05f;
+private:
 
-    void checkInputs(b2Body* body) {
+    Body* body;
 
-        std::cout << body->GetPosition().x << std::endl;
+public:
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) moveForward(body);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) rotateRight(body); else slowsRightRotation(body);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) rotateLeft(body);  else slowsLeftRotation(body);
+    const float rdamping = 0.05;
+
+    const float boost = 0.5f;
+    const float torsion = 0.1f;
+
+    void init() {
+
+        body = &entity->getComponent<Body>();
     }
 
-    void moveForward(b2Body* body) {
+    void update() {
 
-        float angle = body->GetAngle();
+        checkInputs();
+    }
+
+    void checkInputs() {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) moveForward();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) rotateRight(); else slowsRightRotation();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) rotateLeft();  else slowsLeftRotation();
+    }
+
+    void moveForward() {
+
+        float angle = body->body->GetAngle();
 
         b2Vec2 force = b2Vec2(
-            linearForce * sin(angle),
-            linearForce * -cos(angle)
+            boost * sin(angle),
+            boost * -cos(angle)
         );
 
-        body->ApplyForceToCenter(force, true);
+        body->body->ApplyForceToCenter(force, true);
     }
 
-    void rotateRight(b2Body* body) {
+    void rotateRight() {
 
-        body->ApplyTorque(torque, true);
+        body->body->ApplyTorque(torsion, true);
     }
 
-    void rotateLeft(b2Body* body) {
+    void rotateLeft() {
 
-        body->ApplyTorque(-torque, true);
+        body->body->ApplyTorque(-torsion, true);
     }
 
-    void slowsRightRotation(b2Body* body) {
+    void slowsRightRotation() {
 
-        if (body->GetAngularVelocity() > 0) {
+        if (body->body->GetAngularVelocity() > 0) {
 
-            float angolarVelocity = body->GetAngularVelocity();
-            float oppositeTorque = -angolarVelocity * rotationDamping;
+            float angolarVelocity = body->body->GetAngularVelocity();
+            float oppositeTorque = -angolarVelocity * rdamping;
 
-            body->ApplyTorque(oppositeTorque, true);
+            body->body->ApplyTorque(oppositeTorque, true);
         }
     }
 
-    void slowsLeftRotation(b2Body* body) {
+    void slowsLeftRotation() {
 
-        if (body->GetAngularVelocity() < 0) {
+        if (body->body->GetAngularVelocity() < 0) {
 
-            float angolarVelocity = body->GetAngularVelocity();
-            float oppositeTorque = -angolarVelocity * rotationDamping;
+            float angolarVelocity = body->body->GetAngularVelocity();
+            float oppositeTorque = -angolarVelocity * rdamping;
 
-            body->ApplyTorque(oppositeTorque, true);
+            body->body->ApplyTorque(oppositeTorque, true);
         }
     }
 };

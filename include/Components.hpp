@@ -1,4 +1,4 @@
-#include "Components/Component.hpp"
+#include "Components/ECS.h"
 #include "Components/Body.hpp"
 #include "Components/Sprite.hpp"
 #include "Components/Controller.hpp"

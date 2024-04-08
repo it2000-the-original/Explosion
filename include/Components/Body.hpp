@@ -1,40 +1,23 @@
-#include <box2d/box2d.h>
+// Questo componente gestisce un corpo della libreria Box2D
 
-struct Body {
+class Body : public Component {
+
+public:
 
     b2Body* body;
 
-    Body(b2World* world, b2BodyType type) {
+    Body(b2BodyDef definition) {
 
-        b2BodyDef definition;
-        definition.type = type;
-
-        body = world->CreateBody(&definition);
+        body = Engine::world->CreateBody(&definition);
     }
 
-    Body(b2World* world, b2BodyType type, float x, float y) {
+    Body(b2BodyDef definition, b2FixtureDef fixture) {
 
-        b2BodyDef definition;
-        definition.type = type;
-        definition.position.Set(x, y);
+        body = Engine::world->CreateBody(&definition);
+        setFixture(fixture);
+    } 
 
-        body = world->CreateBody(&definition);
-    }
-
-    void setShape(b2PolygonShape shape, float density) {
-
-        b2FixtureDef fixture;
-        fixture.shape = &shape;
-        fixture.density = density;
-
-        body->CreateFixture(&fixture);
-    }
-
-    void setShape(b2CircleShape shape, float density) {
-
-        b2FixtureDef fixture;
-        fixture.shape = &shape;
-        fixture.density = density;
+    void setFixture(b2FixtureDef fixture) {
 
         body->CreateFixture(&fixture);
     }

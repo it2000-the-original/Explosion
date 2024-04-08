@@ -1,7 +1,15 @@
-#include <SFML/Graphics.hpp>
+// Rappresentazione grafica del componente Body
 
-struct Sprite {
+class Sprite : public Component {
 
+private:
+
+    Body* body;
+
+public:
+
+    float width;
+    float height;
     sf::Sprite sprite;
 
     Sprite(Element* element) {
@@ -9,19 +17,27 @@ struct Sprite {
         sprite.setTexture(element->texture);
         sprite.setScale(sf::Vector2f(element->scale, element->scale));
         sprite.setOrigin(sf::Vector2f(element->width / 2.f, element->height / 2.f));
+
+        width = element->width * element->scale;
+        height = element->height * element->scale;
     }
 
-    void update(b2Body* body) {
+    void init() {
 
-        b2Vec2 pos = body->GetPosition();
-        float ang = body->GetAngle();
+        body = &entity->getComponent<Body>();
+    }
+
+    void update() {
+
+        b2Vec2 pos = body->body->GetPosition();
+        float ang = body->body->GetAngle();
 
         sprite.setPosition(sf::Vector2f(pos.x * WS, pos.y * WS));
         sprite.setRotation(ang * 180.f / M_PI);
     }
 
-    void draw(sf::RenderWindow* window) {
+    void draw() {
 
-        window->draw(sprite);
+        Engine::window->draw(sprite);
     }
 };

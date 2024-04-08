@@ -4,23 +4,24 @@
 
 #include <box2d/box2d.h>
 
-#include <entt/entt.hpp>
-
 #include <iostream>
 
-// Questa è la classe perincipale, quella che gestisce tutto
-// P.S. Scusate il mio linguaggio poco professionale
-// (per linguaggio intendo il mio modo di esprimermi nei commenti)
+enum groups : std::size_t {
+
+	bullets,
+	asteroids,
+	player,
+};
 
 struct Element;
+class Manager;
 
 const int FPS = 60;
 const float frameDelay = 1.f / float(FPS);
 
-const int windowWidth = 800;
-const int windowHeight = 500;
-
-const b2Vec2 gravity(0.f, 0.f);
+const std::string title = "Explosion Test";
+const int WW = 800; // Window Width
+const int WH = 500; // Window Height
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
@@ -39,12 +40,12 @@ public:
 
     void loadElements();
 
-    sf::RenderWindow window;
-    b2World* world;
+    static sf::RenderWindow* window;
+    static Manager manager;
+    static b2World* world;
 
 private:
 
     std::map<std::string, Element*> elements;
-    entt::registry registry;
     sf::Event event;
 };
