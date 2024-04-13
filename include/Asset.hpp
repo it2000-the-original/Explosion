@@ -7,4 +7,6 @@ struct Asset {
     int width;
     int height;
     float scale;
+
+    std::vector<sf::Vector2i> shape;
 };

@@ -2,5 +2,9 @@
     "cmake.configureArgs": [
         "-DCMAKE_TOOLCHAIN_FILE=C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake",
         "-DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic"     
-    ]
+    ],
+    "files.associations": {
+        "*.in": "cpp",
+        "string": "cpp"
+    }
 }

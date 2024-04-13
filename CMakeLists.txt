@@ -3,7 +3,6 @@ project(Explosion VERSION 0.1.0 LANGUAGES C CXX)
 
 find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
 find_package(box2d CONFIG REQUIRED)
-find_package(EnTT CONFIG REQUIRED)
 
 include(CTest)
 enable_testing()
@@ -14,7 +13,6 @@ target_include_directories(Explosion PRIVATE "include")
 
 target_link_libraries(Explosion PRIVATE sfml-system sfml-graphics sfml-window)
 target_link_libraries(Explosion PRIVATE box2d::box2d)
-target_link_libraries(Explosion PRIVATE EnTT::EnTT)
 
 # Copia degli assete e delle risorse
 

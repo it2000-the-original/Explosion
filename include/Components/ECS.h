@@ -35,6 +35,8 @@ public:
 	virtual void update() {}
 	virtual void draw() {}
 	virtual ~Component() {}
+
+	virtual void onCollision2D(Entity* _entity) {}
 };
 
 class Entity {

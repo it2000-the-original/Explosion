@@ -8,6 +8,8 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Bellaaaaa ci sono anch'io - versione 0.1 - it2000" << std::endl;
 
+    srand(time(NULL));
+
     engine.init();
 
     while (engine.running()) {

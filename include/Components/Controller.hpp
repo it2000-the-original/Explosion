@@ -10,10 +10,10 @@ private:
 
 public:
 
-    const float rdamping = 0.05;
+    const float rdamping = 0.0125;
 
-    const float boost = 0.5f;
-    const float torsion = 0.1f;
+    const float boost = 0.1f;
+    const float torsion = 0.025f;
 
     void init() {
 
@@ -35,13 +35,7 @@ public:
     void moveForward() {
 
         float angle = body->body->GetAngle();
-
-        b2Vec2 force = b2Vec2(
-            boost * sin(angle),
-            boost * -cos(angle)
-        );
-
-        body->body->ApplyForceToCenter(force, true);
+        body->applyForce(boost, angle);
     }
 
     void rotateRight() {

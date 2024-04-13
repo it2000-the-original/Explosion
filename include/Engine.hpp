@@ -13,6 +13,14 @@ enum groups : std::size_t {
 	player,
 };
 
+enum Categories : int16 {
+
+    Cplayer   = 0x0001,
+    Claser    = 0x0002,
+    Casteroid = 0x0004,
+    Cdebris   = 0x0008
+};
+
 struct Element;
 class Manager;
 
@@ -40,12 +48,12 @@ public:
 
     void loadElements();
 
+    static std::map<std::string, Element*> elements;
     static sf::RenderWindow* window;
     static Manager manager;
     static b2World* world;
 
 private:
 
-    std::map<std::string, Element*> elements;
     sf::Event event;
 };

@@ -6,4 +6,6 @@ struct Element {
     float width;
     float height;
     float scale;
+
+    b2PolygonShape shape;
 };
