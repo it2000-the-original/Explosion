@@ -17,8 +17,10 @@ const int MC = 32; // Max Components
 const int MG = 32; // Max Groups
 
 using Components = std::vector<std::unique_ptr<Component>>;
-using CArray = std::array<Component*, MC>;
+using GBitset = std::bitset<MG>;
 using CBitset = std::bitset<MC>;
+using CArray = std::array<Component*, MC>;
+using GArray = std::array<std::vector<Entity*>, MG>;
 
 using Entities = std::vector<std::unique_ptr<Entity>>;
 
@@ -54,6 +56,7 @@ private:
 
 	Components components;
 	CBitset cbitset;
+	GBitset gbitset;
 	CArray carray;
 
 	bool active = true;
@@ -114,6 +117,11 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
+	void setGroup(std::size_t group) {
+
+		gbitset.set(group, 1);
+	}
+
 	~Entity() {}
 };
 
@@ -122,6 +130,7 @@ class Manager {
 private:
 
 	Entities entities;
+	GArray groups;
 
 public:
 
@@ -150,5 +159,16 @@ public:
 		Entity* e = new Entity(*this);
 		entities.emplace_back(std::move(e));
 		return *e;
+	}
+
+	void addToGrop(Entity* entity, std::size_t group) {
+		
+		groups[group].emplace_back(std::move(entity));
+		entity->setGroup(group);
+	}
+
+	std::vector<Entity*>& getGroup(std::size_t group) {
+
+		return groups[group];
 	}
 };
