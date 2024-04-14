@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <bitset>
 
 /* This is the header file that define all of the classes to manage for the
  * Entity Component System, in fact there is a Component class that acts as a polymorphism
@@ -13,6 +14,13 @@ class Entity;
 class Manager;
 
 const int MC = 32; // Max Components
+const int MG = 32; // Max Groups
+
+using Components = std::vector<std::unique_ptr<Component>>;
+using CArray = std::array<Component*, MC>;
+using CBitset = std::bitset<MC>;
+
+using Entities = std::vector<std::unique_ptr<Entity>>;
 
 inline int getNewComponentID() {
 
@@ -39,17 +47,20 @@ public:
 	virtual void onCollision2D(Entity* _entity) {}
 };
 
+
 class Entity {
 
 private:
 
+	Components components;
+	CBitset cbitset;
+	CArray carray;
+
 	bool active = true;
-	Component* CArray[MC];
 
 public:
 
 	Manager& manager;
-	std::vector<Component*> components;
 
 	Entity(Manager& mManager) : manager(mManager) {}
 
@@ -61,6 +72,11 @@ public:
 	void draw() {
 
 		for (auto& c : components) c->draw();
+	}
+
+	void onCollision2D(Entity* entity) {
+
+		for (auto& c : components) c->onCollision2D(entity);
 	}
 
 	bool isActive() { 
@@ -76,35 +92,36 @@ public:
 	template <typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs) {
 
 		T* c = new T(std::forward<TArgs>(mArgs)...);
+		std::unique_ptr<Component> uPtr(c);
+
+		components.emplace_back(std::move(uPtr));
+		cbitset.set(getComponentID<T>(), 1);
+		carray[getComponentID<T>()] = c;
 
 		c->entity = this;
-		components.emplace_back(std::move(c));
-		CArray[getComponentID<T>()] = c;
 		c->init();
 		return *c;
 	}
 
+	template <typename T> bool hasComponent() const {
+
+		return cbitset[getComponentID<T>()];
+	}
+
 	template <typename T> T& getComponent() const {
 
-		auto ptr = CArray[getComponentID<T>()];
+		auto ptr = carray[getComponentID<T>()];
 		return *static_cast<T*>(ptr);
 	}
 
-	~Entity() {
-
-		for (int i = int(components.size()) - 1; i >= 0; i--) {
-
-			delete components[i];
-			components.erase(components.begin() + i);
-		}
-	}
+	~Entity() {}
 };
 
 class Manager {
 
 private:
 
-	std::vector<Entity*> entities;
+	Entities entities;
 
 public:
 
@@ -120,14 +137,10 @@ public:
 
 	void refersh() {
 
-		entities.erase(std::remove_if(std::begin(entities), std::end(entities), [](Entity* mEntity) {
-
-			if (!mEntity->isActive()) {
-				delete mEntity;
-				return true;
-			}
-
-			else return false;
+		entities.erase(std::remove_if(std::begin(entities), std::end(entities), 
+		[](const std::unique_ptr<Entity> &entity) {
+			
+			return !entity->isActive();
 
 		}), std::end(entities));
 	}

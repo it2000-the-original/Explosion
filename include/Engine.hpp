@@ -6,11 +6,12 @@
 
 #include <iostream>
 
-enum groups : std::size_t {
+enum Groups : std::size_t {
 
-	bullets,
-	asteroids,
-	player,
+    Gplayer,
+    Gasteroids,
+    Glasers,
+    Gdebris
 };
 
 enum Categories : int16 {

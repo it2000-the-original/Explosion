@@ -9,7 +9,7 @@ class Listener : public b2ContactListener {
         Entity* entityA = reinterpret_cast<Entity*>(bodyA->GetUserData().pointer);
         Entity* entityB = reinterpret_cast<Entity*>(bodyB->GetUserData().pointer);
 
-        for (auto& c : entityA->components) c->onCollision2D(entityB);
-        for (auto& c : entityB->components) c->onCollision2D(entityA);
+        entityA->onCollision2D(entityB);
+        entityB->onCollision2D(entityA);
     }
 };
