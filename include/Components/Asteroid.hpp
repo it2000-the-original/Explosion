@@ -63,6 +63,7 @@ public:
         debris.addComponent<Destroyer>(2.f);
         debris.getComponent<Body>().body->SetTransform(entity->getComponent<Body>().body->GetPosition(), 0);
         debris.getComponent<Body>().applyImpulse(impulse, direction);
+        Engine::manager.addToGrop(&debris, Gdebris);
     }
 
     void setDefaultDebrisDefinition() {

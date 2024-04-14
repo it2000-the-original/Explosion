@@ -21,6 +21,11 @@ Manager Engine::manager;
 b2World* Engine::world;
 Listener listener;
 
+auto& playerGroup    = Engine::manager.getGroup(Gplayer);
+auto& asteroidsGroup = Engine::manager.getGroup(Gasteroids);
+auto& lasersGroup    = Engine::manager.getGroup(Gasteroids);
+auto& debrisGroup    = Engine::manager.getGroup(Gdebris);
+
 void Engine::init() {
 
     window = new sf::RenderWindow(sf::VideoMode(WW, WH), title, sf::Style::Close);
@@ -37,16 +42,21 @@ void Engine::init() {
 
 void Engine::update() {
 
-    world->Step(frameDelay, velocityIterations, positionIterations);
-
     manager.update();
     manager.refersh();
+
+    world->Step(frameDelay, velocityIterations, positionIterations);
 }
 
 void Engine::render() {
 
     window->clear();
-    manager.draw();
+
+    for (auto& e : debrisGroup)    e -> draw();
+    for (auto& e : lasersGroup)    e -> draw();
+    for (auto& e : asteroidsGroup) e -> draw();
+    for (auto& e : playerGroup)    e -> draw();
+
     window->display();
 }
 
@@ -57,6 +67,14 @@ void Engine::handleEvents() {
         if (event.type == sf::Event::Closed) {
 
             window->close();
+        }
+
+        else if (event.type == sf::Event::KeyPressed) {
+
+            if (event.key.scancode == sf::Keyboard::Scan::M) {
+
+                _loadAsteroid();
+            }
         }
     }
 }
@@ -122,9 +140,8 @@ void _setDefaultPlayerSettings() {
 
 void _setDefaultAsteroidSettings() {
 
-    asteroidBodyDef.type = b2_staticBody;
-    asteroidBodyDef.position.Set(4.f, 1.5f);
-    asteroidFixtureDef.density = 1.0f;
+    asteroidBodyDef.type = b2_dynamicBody;
+    asteroidFixtureDef.density = 10.0f;
     asteroidFixtureDef.filter.categoryBits = Casteroid;
     asteroidFixtureDef.filter.maskBits = Claser | Cplayer;
     asteroidFixtureDef.shape = &Engine::elements["meteor"]->shape;
@@ -138,6 +155,7 @@ void _loadPlayer() {
     spaceship.addComponent<Controller>();
     spaceship.addComponent<Teleporter>();
     spaceship.addComponent<Weapon>(Engine::elements["laser"]);
+    Engine::manager.addToGrop(&spaceship, Gplayer);
 }
 
 void _loadAsteroid() {
@@ -146,8 +164,10 @@ void _loadAsteroid() {
     asteroid.addComponent<Body>(asteroidBodyDef, asteroidFixtureDef);
     asteroid.addComponent<Sprite>(Engine::elements["meteor"]);
     asteroid.addComponent<Teleporter>();
+    asteroid.getComponent<Body>().body->SetTransform(b2Vec2((rand() % (WW + 1)) / WS, (rand() % (WH + 1)) / WS), 0);
 
     std::vector<Element*> debris = {Engine::elements["meteor2"]};
 
     asteroid.addComponent<Asteroid>(20);
+    Engine::manager.addToGrop(&asteroid, Gasteroids);
 }

@@ -66,6 +66,7 @@ public:
 
         else teleporting = false;
 
+        mirror.setColor(sprite->sprite.getColor());
         mirror.setRotation(sprite->sprite.getRotation());
         mirror.setPosition(pos);
     }

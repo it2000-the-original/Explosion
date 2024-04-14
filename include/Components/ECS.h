@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <bitset>
+#include <array>
 
 /* This is the header file that define all of the classes to manage for the
  * Entity Component System, in fact there is a Component class that acts as a polymorphism
@@ -17,7 +18,6 @@ const int MC = 32; // Max Components
 const int MG = 32; // Max Groups
 
 using Components = std::vector<std::unique_ptr<Component>>;
-using GBitset = std::bitset<MG>;
 using CBitset = std::bitset<MC>;
 using CArray = std::array<Component*, MC>;
 using GArray = std::array<std::vector<Entity*>, MG>;
@@ -56,7 +56,6 @@ private:
 
 	Components components;
 	CBitset cbitset;
-	GBitset gbitset;
 	CArray carray;
 
 	bool active = true;
@@ -117,11 +116,6 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
-	void setGroup(std::size_t group) {
-
-		gbitset.set(group, 1);
-	}
-
 	~Entity() {}
 };
 
@@ -146,6 +140,8 @@ public:
 
 	void refersh() {
 
+		refershGroups();
+
 		entities.erase(std::remove_if(std::begin(entities), std::end(entities), 
 		[](const std::unique_ptr<Entity> &entity) {
 			
@@ -164,11 +160,23 @@ public:
 	void addToGrop(Entity* entity, std::size_t group) {
 		
 		groups[group].emplace_back(std::move(entity));
-		entity->setGroup(group);
 	}
 
 	std::vector<Entity*>& getGroup(std::size_t group) {
 
 		return groups[group];
+	}
+
+	void refershGroups() {
+
+		for (int i = 0; i < MG; i++) {
+
+			groups[i].erase(std::remove_if(std::begin(groups[i]), std::end(groups[i]), 
+			[i](Entity* entity) {
+			
+				return !entity->isActive();
+
+			}), std::end(groups[i]));
+		}
 	}
 };
