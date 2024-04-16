@@ -43,7 +43,7 @@ void Engine::init() {
     _setDefaultPlayerSettings();
     _setDefaultAsteroidSettings();
     _loadPlayer();
-    _loadAsteroid();
+    //_loadAsteroid();
 }
 
 void Engine::update() {

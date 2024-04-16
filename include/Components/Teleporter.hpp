@@ -9,6 +9,8 @@ private:
     Body* body;
     Sprite* sprite;
 
+    bool drawMirror = true;
+
 public:
 
     // È uno sprite che rappresente la sporgenza
@@ -17,6 +19,13 @@ public:
     sf::Sprite mirror;
 
     bool teleporting = false;
+
+    Teleporter() {}
+
+    Teleporter(bool _drawMirror) {
+
+        drawMirror = _drawMirror;
+    }
 
     void init() {
 
@@ -36,7 +45,7 @@ public:
 
     void draw() {
 
-        if (teleporting) {
+        if (teleporting and drawMirror) {
 
             Engine::window->draw(mirror);
         }
@@ -46,15 +55,10 @@ public:
 
         b2Vec2 pos = body->body->GetPosition();
 
-        if (pos.x >= float(WW) / WS or pos.x < 0.f) {
-
-            pos.x = float(WW) / WS - pos.x;
-        }
-
-        else if (pos.y >= float(WH) / WS or pos.y < 0.f) {
-
-            pos.y = float(WH) / WS - pos.y;
-        }
+        if      (pos.x > WW / WS) pos.x = 0.f;
+        else if (pos.x <   0.f  ) pos.x = WW / WS;
+        if      (pos.y > WH / WS) pos.y = 0.f;
+        else if (pos.y <   0.f  ) pos.y = WH / WS;
 
         body->body->SetTransform(pos, body->body->GetAngle());
     }
@@ -80,15 +84,15 @@ public:
 
     float getHorizontalProjection() {
 
-        float side1 = fabs(sprite->width * cos(body->body->GetAngle()));
-        float side2 = fabs(sprite->height * cos(body->body->GetAngle()));
+        float side1 = fabs(sprite->width  * cos(body->body->GetAngle()));
+        float side2 = fabs(sprite->height * sin(body->body->GetAngle()));
         return (side1 + side2) / 2.f;
     }
 
     float getVerticalProjection() {
 
-        float side1 = fabs(sprite->width * sin(body->body->GetAngle()));
-        float side2 = fabs(sprite->height * sin(body->body->GetAngle()));
+        float side1 = fabs(sprite->width  * sin(body->body->GetAngle()));
+        float side2 = fabs(sprite->height * cos(body->body->GetAngle()));
         return (side1 + side2) / 2.f;
     }
 

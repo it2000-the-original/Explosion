@@ -50,7 +50,7 @@ public:
         auto& laser = entity->manager.addEntity();
         laser.addComponent<Body>(definition, fixture);
         laser.addComponent<Sprite>(element);
-        laser.addComponent<Teleporter>();
+        laser.addComponent<Teleporter>(false);
         laser.addComponent<Destroyer>(0.35f);
         laser.getComponent<Body>().body->SetTransform(pos, angle);
         laser.getComponent<Body>().setVelocity(velocity, angle);
