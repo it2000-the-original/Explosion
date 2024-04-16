@@ -1,4 +1,4 @@
-// Rappresentazione grafica del componente Body
+// Gestisce un sf::Sprite per la rappresentazione grafica di Body
 
 class Sprite : public Component {
 

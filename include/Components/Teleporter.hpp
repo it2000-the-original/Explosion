@@ -1,3 +1,6 @@
+// Questo componente ha la funzione di fare da effetto
+// pacman, quando ci si trova al bordo dello schermo,
+// si viene trasportati dall'altro lato
 
 class Teleporter : public Component {
 
@@ -8,7 +11,11 @@ private:
 
 public:
 
+    // È uno sprite che rappresente la sporgenza
+    // dell'originale, dall'altro lato dello schermo
+
     sf::Sprite mirror;
+
     bool teleporting = false;
 
     void init() {

@@ -1,3 +1,5 @@
+// Gestisce le operazioni da svolgere in seguito
+// alla collisione tra due fixture
 
 class Listener : public b2ContactListener {
 

@@ -15,8 +15,8 @@ void _setDefaultAsteroidSettings();
 void _loadPlayer();
 void _loadAsteroid();
 
-std::map<std::string, Element*> Engine::elements;
 sf::RenderWindow* Engine::window;
+Elements Engine::elements;
 Manager Engine::manager;
 b2World* Engine::world;
 Listener listener;

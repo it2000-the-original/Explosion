@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-enum Groups : std::size_t {
+enum Groups : std::size_t { // Definizione dei gruppi di rendering
 
     Gplayer,
     Gasteroids,
@@ -14,7 +14,7 @@ enum Groups : std::size_t {
     Gdebris
 };
 
-enum Categories : int16 {
+enum Categories : int16 { // Definizione dei gruppi di collisione
 
     Cplayer   = 0x0001,
     Claser    = 0x0002,
@@ -25,16 +25,18 @@ enum Categories : int16 {
 struct Element;
 class Manager;
 
+using Elements = std::map<std::string, Element*>;
+
 const int FPS = 60;
 const float frameDelay = 1.f / float(FPS);
 
-const std::string title = "Explosion Test";
+const std::string title = "Explosion 0.1 - it2000";
 const int WW = 800; // Window Width
 const int WH = 500; // Window Height
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
-const float WS = 100.f;
+const float WS = 100.f; // World Scale
 
 class Engine {
 
@@ -49,8 +51,8 @@ public:
 
     void loadElements();
 
-    static std::map<std::string, Element*> elements;
     static sf::RenderWindow* window;
+    static Elements elements;
     static Manager manager;
     static b2World* world;
 

@@ -2,11 +2,11 @@
 
 struct Asset {
 
-    std::string path;
-    std::string name;
+    std::string path; // Destinazione della texture
+    std::string name; // Nome dell'elemento
     int width;
     int height;
-    float scale;
+    float scale; // Fattore di scala
 
-    std::vector<sf::Vector2i> shape;
+    std::vector<sf::Vector2i> shape; // Poligono di collisione
 };

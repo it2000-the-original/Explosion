@@ -5,10 +5,10 @@ private:
 
     Body* body;
 
-    b2BodyDef definition;
-    b2FixtureDef fixture;
-    b2PolygonShape shape;
-    Element* element;
+    b2BodyDef definition; // Definizione del corpo di un laser
+    b2FixtureDef fixture; // Definizione di una fixture di un laser
+    b2PolygonShape shape; // Forma del laser
+    Element* element;     // Elemento di riferimento
 
     float velocity = 10.f;
     bool shot;
@@ -32,7 +32,7 @@ public:
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
-            if (!shot) {
+            if (!shot) { // Nel caso si tenesse premuta la spacebar
 
                 shoot();
                 shot = true;

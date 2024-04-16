@@ -10,10 +10,9 @@ private:
 
 public:
 
-    const float rdamping = 0.0125;
-
-    const float boost = 0.1f;
-    const float torsion = 0.025f;
+    const float boost = 0.1f;      // Forza applicata per il movimento in avanti
+    const float torsion = 0.025f;  // Forza di rotazione applicata dai comandi
+    const float rdamping = 0.0125; // Questa attrito viene applicata solo quando non vi sono comandi di rotazione
 
     void init() {
 
@@ -21,11 +20,6 @@ public:
     }
 
     void update() {
-
-        checkInputs();
-    }
-
-    void checkInputs() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) moveForward();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) rotateRight(); else slowsRightRotation();
@@ -40,13 +34,20 @@ public:
 
     void rotateRight() {
 
-        body->body->ApplyTorque(torsion, true);
+        if (body->body->GetAngularVelocity() < 15.f)
+            body->body->ApplyTorque(torsion, true);
     }
 
     void rotateLeft() {
 
-        body->body->ApplyTorque(-torsion, true);
+        if (body->body->GetAngularVelocity() > -15.f)
+            body->body->ApplyTorque(-torsion, true);
     }
+
+    // Questa funzione, insieme alla successiva, servono a
+    // rallentare il moto di rotazione quando non si sta premendo
+    // alcun tasto per proseguirlo, applicando l'attrito specificato
+    // all'inizio della classe
 
     void slowsRightRotation() {
 

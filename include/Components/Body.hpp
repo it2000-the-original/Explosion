@@ -4,7 +4,7 @@ class Body : public Component {
 
 private:
 
-    int16 category;
+    int16 category; // il tipo di oggetto
 
 public:
 
@@ -34,6 +34,8 @@ public:
 
     void setVelocity(float velocity, float angle) {
 
+        // Imposta la velocità un modulo ed un angolo
+
         b2Vec2 vel = b2Vec2(
             velocity * sin(angle),
             velocity * -cos(angle)
@@ -44,9 +46,11 @@ public:
 
     void applyForce(float force, float angle) {
 
+        // Applica una forza con mudulo ed angolo
+
         b2Vec2 _force = b2Vec2(
-            force * sin(angle),
-            force * -cos(angle)
+            force * sin(angle), // Componente orizzontale
+            force * -cos(angle) // Componente verticale
         );
 
         body->ApplyForceToCenter(_force, true);
@@ -54,12 +58,20 @@ public:
 
     void applyImpulse(float impulse, float angle) {
 
+        // Applica un impulso con modulo ed angolo
+
         b2Vec2 imp = b2Vec2(
-            impulse * sin(angle),
-            impulse * -cos(angle)
+            impulse * sin(angle), // Componente orizzontale
+            impulse * -cos(angle) // Componente verticale
         );
 
         body->ApplyLinearImpulseToCenter(imp, true);
+    }
+
+    float getVelocity() {
+
+        b2Vec2 vel = body->GetLinearVelocity();
+        return sqrt(pow(vel.x, 2) + pow(vel.y, 2));
     }
 
     int16 getCategory() {
