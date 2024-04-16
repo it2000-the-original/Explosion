@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 #include "Element.hpp"
 #include "Assets.hpp"
+#include "Random.hpp"
 #include "Components.hpp"
 #include "Listener.hpp"
 

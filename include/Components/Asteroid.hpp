@@ -52,7 +52,8 @@ public:
 
         for (int i = 0; i < number; i++) {
 
-            launchDebris(Engine::elements[debrisAssets[rand() % debrisAssets.size()]]);
+            std::string asset = debrisAssets[ex::random(debrisAssets.size() - 1)];
+            launchDebris(Engine::elements[asset]);
         }
     }
 
