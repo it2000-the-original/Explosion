@@ -20,7 +20,8 @@ const std::vector<Asset> assets = {
         {0,60},{2,26},{18,6}
     }},
 
-    {"assets/textures/laserBlue16.png",      "laser",  13, 54, 0.5f},
-    {"assets/textures/meteorBrown_big3.png", "meteor1", 89, 82, 0.125f},  // Detrito 1
-    {"assets/textures/meteorBrown_big3.png", "meteor2", 89, 82, 0.0625f}, // Detrito 2
+    {"assets/textures/black.png",            "background", 256, 256, 0.5f},
+    {"assets/textures/laserBlue16.png",      "laser",      13,  54,  0.5f},
+    {"assets/textures/meteorBrown_big3.png", "meteor1",    89,  82,  0.125f},  // Detrito 1
+    {"assets/textures/meteorBrown_big3.png", "meteor2",    89,  82,  0.0625f}, // Detrito 2
 };

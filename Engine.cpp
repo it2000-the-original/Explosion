@@ -4,6 +4,7 @@
 #include "Random.hpp"
 #include "Components.hpp"
 #include "Listener.hpp"
+#include "Background.hpp"
 
 b2BodyDef playerBodyDef;
 b2BodyDef asteroidBodyDef;
@@ -22,10 +23,11 @@ Manager Engine::manager;
 b2World* Engine::world;
 Listener listener;
 
-auto& playerGroup    = Engine::manager.getGroup(Gplayer);
-auto& asteroidsGroup = Engine::manager.getGroup(Gasteroids);
-auto& lasersGroup    = Engine::manager.getGroup(Gasteroids);
-auto& debrisGroup    = Engine::manager.getGroup(Gdebris);
+auto& playerGroup     = Engine::manager.getGroup(Gplayer);
+auto& asteroidsGroup  = Engine::manager.getGroup(Gasteroids);
+auto& lasersGroup     = Engine::manager.getGroup(Gasteroids);
+auto& debrisGroup     = Engine::manager.getGroup(Gdebris);
+auto& backgroundGroup = Engine::manager.getGroup(Gbackground);
 
 void Engine::init() {
 
@@ -34,6 +36,9 @@ void Engine::init() {
     world = new b2World(b2Vec2(0.f, 0.f));
     world->SetContactListener(&listener);
     loadElements();
+
+    Background background("background");
+    background.drawBackground();
 
     _setDefaultPlayerSettings();
     _setDefaultAsteroidSettings();
@@ -53,10 +58,11 @@ void Engine::render() {
 
     window->clear();
 
-    for (auto& e : debrisGroup)    e -> draw();
-    for (auto& e : lasersGroup)    e -> draw();
-    for (auto& e : asteroidsGroup) e -> draw();
-    for (auto& e : playerGroup)    e -> draw();
+    for (auto& e : backgroundGroup) e -> draw();
+    for (auto& e : debrisGroup)     e -> draw();
+    for (auto& e : lasersGroup)     e -> draw();
+    for (auto& e : asteroidsGroup)  e -> draw();
+    for (auto& e : playerGroup)     e -> draw();
 
     window->display();
 }

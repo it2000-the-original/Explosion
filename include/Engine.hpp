@@ -11,7 +11,8 @@ enum Groups : std::size_t { // Definizione dei gruppi di rendering
     Gplayer,
     Gasteroids,
     Glasers,
-    Gdebris
+    Gdebris,
+    Gbackground
 };
 
 enum Categories : int16 { // Definizione dei gruppi di collisione
