@@ -16,9 +16,11 @@ public:
     // È uno sprite che rappresente la sporgenza
     // dell'originale, dall'altro lato dello schermo
 
-    sf::Sprite mirror;
+    sf::Sprite xMirror; // Specchio per la proiezione orizzontale
+    sf::Sprite yMirror; // Specchio per la proiezione verticale
 
-    bool teleporting = false;
+    bool xTeleporting = false;
+    bool yTeleporting = false;
 
     Teleporter() {}
 
@@ -31,23 +33,21 @@ public:
 
         body = &entity->getComponent<Body>();
         sprite = &entity->getComponent<Sprite>();
-
-        mirror.setTexture(*sprite->sprite.getTexture());
-        mirror.setScale(sprite->sprite.getScale());
-        mirror.setOrigin(sprite->sprite.getOrigin());
     }
 
     void update() {
 
         teleport();
-        setMirror();
+        setXMirror();
+        setYMirror();
     }
 
     void draw() {
 
-        if (teleporting and drawMirror) {
+        if (drawMirror) {
 
-            Engine::window->draw(mirror);
+            if (xTeleporting) Engine::window->draw(xMirror);
+            if (yTeleporting) Engine::window->draw(yMirror);
         }
     }
 
@@ -63,23 +63,46 @@ public:
         body->body->SetTransform(pos, body->body->GetAngle());
     }
 
-    void setMirror() {
+    void setXMirror() {
 
         sf::Vector2f pos = sprite->sprite.getPosition();
-        float hproj = getHorizontalProjection();
-        float vproj = getVerticalProjection();
+        float hProj = getHorizontalProjection();
+        xMirror = sprite->sprite;
 
-        if (_rightMirror(hproj, &pos) or _leftMirror(hproj, &pos) or
-            _downMirror(vproj, &pos) or _upMirror(vproj, &pos)) {
+        _setXTeleporting(hProj, &pos);
 
-            teleporting = true;
+        xMirror.setPosition(pos);
+    }
+
+    void setYMirror() {
+
+        sf::Vector2f pos = sprite->sprite.getPosition();
+        float vProj = getVerticalProjection();
+        yMirror = sprite->sprite;
+
+        _setYTeleporting(vProj, &pos);
+
+        yMirror.setPosition(pos);
+    }
+
+    void _setXTeleporting(float proj, sf::Vector2f* pos) {
+
+        if (_rightMirror(proj, pos) or _leftMirror(proj, pos)) {
+
+            xTeleporting = true;
         }
 
-        else teleporting = false;
+        else xTeleporting = false;
+    }
 
-        mirror.setColor(sprite->sprite.getColor());
-        mirror.setRotation(sprite->sprite.getRotation());
-        mirror.setPosition(pos);
+    void _setYTeleporting(float proj, sf::Vector2f* pos) {
+
+        if (_upMirror(proj, pos) or _downMirror(proj, pos)) {
+
+            yTeleporting = true;
+        }
+
+        else yTeleporting = false;
     }
 
     float getHorizontalProjection() {

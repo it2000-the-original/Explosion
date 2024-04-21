@@ -22,6 +22,11 @@ const std::vector<Asset> assets = {
 
     {"assets/textures/black.png",            "background", 256, 256, 0.5f},
     {"assets/textures/laserBlue16.png",      "laser",      13,  54,  0.5f},
-    {"assets/textures/meteorBrown_big3.png", "meteor1",    89,  82,  0.125f},  // Detrito 1
-    {"assets/textures/meteorBrown_big3.png", "meteor2",    89,  82,  0.0625f}, // Detrito 2
+
+    {"assets/textures/debris/meteorBrown_med1.png",   "debris1", 43, 43, 0.5f},
+    {"assets/textures/debris/meteorBrown_med3.png",   "debris2", 45, 40, 0.5f},
+    {"assets/textures/debris/meteorBrown_small1.png", "debris3", 28, 28, 0.5f},
+    {"assets/textures/debris/meteorBrown_small2.png", "debris4", 29, 26, 0.5f},
+    {"assets/textures/debris/meteorBrown_tiny1.png",  "debris5", 18, 18, 0.5f},
+    {"assets/textures/debris/meteorBrown_tiny2.png",  "debris6", 16, 15, 0.5f}
 };

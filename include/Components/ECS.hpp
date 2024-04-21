@@ -45,8 +45,15 @@ public:
 	virtual void update() {}
 	virtual void draw() {}
 	virtual ~Component() {}
+};
+
+class MonoBehaviour : public Component {
+
+public:
 
 	virtual void onCollision2D(Entity* _entity) {}
+	virtual void inCollision2D(Entity* _entity) {}
+	virtual void afterCollision2D(Entity* _entity) {}
 };
 
 
@@ -76,11 +83,6 @@ public:
 		for (auto& c : components) c->draw();
 	}
 
-	void onCollision2D(Entity* entity) {
-
-		for (auto& c : components) c->onCollision2D(entity);
-	}
-
 	bool isActive() { 
 	
 		return active;
@@ -99,6 +101,20 @@ public:
 		components.emplace_back(std::move(uPtr));
 		cbitset.set(getComponentID<T>(), 1);
 		carray[getComponentID<T>()] = c;
+
+		c->entity = this;
+		c->init();
+		return *c;
+	}
+
+	template <typename T, typename... TArgs> T& addMonoBehaviour(TArgs&&... mArgs) {
+
+		T* c = new T(std::forward<TArgs>(mArgs)...);
+		std::unique_ptr<Component> uPtr(c);
+
+		components.emplace_back(std::move(uPtr));
+		cbitset.set(getComponentID<MonoBehaviour>(), 1);
+		carray[getComponentID<MonoBehaviour>()] = c;
 
 		c->entity = this;
 		c->init();

@@ -43,7 +43,7 @@ void Engine::init() {
     _setDefaultPlayerSettings();
     _setDefaultAsteroidSettings();
     _loadPlayer();
-    //_loadAsteroid();
+    _loadAsteroid();
 }
 
 void Engine::update() {
@@ -139,6 +139,7 @@ void _setDefaultPlayerSettings() {
 
     playerBodyDef.type = b2_dynamicBody;
     playerBodyDef.position.Set(4.f, 2.5f);
+    playerBodyDef.linearDamping = 1.f;
     playerFixtureDef.density = 1.0f;
     playerFixtureDef.filter.categoryBits = Cplayer;
     playerFixtureDef.filter.maskBits = Casteroid;
@@ -148,6 +149,7 @@ void _setDefaultPlayerSettings() {
 void _setDefaultAsteroidSettings() {
 
     asteroidBodyDef.type = b2_dynamicBody;
+    asteroidBodyDef.linearDamping = 1.f;
     asteroidFixtureDef.density = 10.0f;
     asteroidFixtureDef.filter.categoryBits = Casteroid;
     asteroidFixtureDef.filter.maskBits = Claser | Cplayer;
@@ -172,9 +174,6 @@ void _loadAsteroid() {
     asteroid.addComponent<Sprite>(Engine::elements["meteor"]);
     asteroid.addComponent<Teleporter>();
     asteroid.getComponent<Body>().body->SetTransform(b2Vec2((rand() % (WW + 1)) / WS, (rand() % (WH + 1)) / WS), 0);
-
-    std::vector<Element*> debris = {Engine::elements["meteor2"]};
-
-    asteroid.addComponent<Asteroid>(20);
+    asteroid.addMonoBehaviour<Asteroid>(3);
     Engine::manager.addToGrop(&asteroid, Gasteroids);
 }

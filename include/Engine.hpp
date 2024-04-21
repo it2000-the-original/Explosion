@@ -29,7 +29,7 @@ class Manager;
 using Elements = std::map<std::string, Element*>;
 
 const int FPS = 60;
-const float frameDelay = 1.f / float(FPS);
+const float frameDelay = 1.f / FPS;
 
 const std::string title = "Explosion 0.1 - it2000";
 const int WW = 800; // Window Width

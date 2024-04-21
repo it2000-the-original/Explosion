@@ -32,6 +32,11 @@ public:
         category = fixture.filter.categoryBits;
     }
 
+    void setPosition(b2Vec2 pos) {
+
+        body->SetTransform(pos, body->GetAngle());
+    }
+
     void setVelocity(float velocity, float angle) {
 
         // Imposta la velocità un modulo ed un angolo
@@ -66,6 +71,16 @@ public:
         );
 
         body->ApplyLinearImpulseToCenter(imp, true);
+    }
+
+    void applyAngularImpulse(float impulse) {
+
+        body->ApplyAngularImpulse(impulse, true);
+    }
+
+    b2Vec2 getPosition() {
+
+        return body->GetPosition();
     }
 
     float getVelocity() {

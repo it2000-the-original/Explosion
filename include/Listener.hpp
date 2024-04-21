@@ -1,5 +1,5 @@
 // Gestisce le operazioni da svolgere in seguito
-// alla collisione tra due fixture
+// alla collisione tra due fixture (Corpi)
 
 class Listener : public b2ContactListener {
 
@@ -11,7 +11,10 @@ class Listener : public b2ContactListener {
         Entity* entityA = reinterpret_cast<Entity*>(bodyA->GetUserData().pointer);
         Entity* entityB = reinterpret_cast<Entity*>(bodyB->GetUserData().pointer);
 
-        entityA->onCollision2D(entityB);
-        entityB->onCollision2D(entityA);
+        if (entityA->hasComponent<MonoBehaviour>())
+            entityA->getComponent<MonoBehaviour>().onCollision2D(entityB);
+
+        if (entityB->hasComponent<MonoBehaviour>())
+            entityB->getComponent<MonoBehaviour>().onCollision2D(entityA);
     }
 };

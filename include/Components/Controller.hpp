@@ -10,7 +10,7 @@ private:
 
 public:
 
-    const float boost = 0.1f;      // Forza applicata per il movimento in avanti
+    const float boost = 0.3f;      // Forza applicata per il movimento in avanti
     const float torsion = 0.025f;  // Forza di rotazione applicata dai comandi
     const float rdamping = 0.0125; // Questa attrito viene applicata solo quando non vi sono comandi di rotazione
 
