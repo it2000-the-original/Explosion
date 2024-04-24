@@ -54,7 +54,7 @@ public:
         laser.addComponent<Destroyer>(0.35f);
         laser.getComponent<Body>().body->SetTransform(pos, angle);
         laser.getComponent<Body>().setVelocity(velocity, angle);
-        Engine::manager.addToGrop(&laser, Gdebris);
+        Engine::manager.addToGrop(&laser, Glasers);
     }
 
     void _setDefaultDefinition() {

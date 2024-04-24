@@ -32,6 +32,13 @@ public:
         category = fixture.filter.categoryBits;
     }
 
+    void setRotation(float angle) {
+
+        b2Vec2 pos = body->GetPosition();
+
+        body->SetTransform(pos, angle);
+    }
+
     void setPosition(b2Vec2 pos) {
 
         body->SetTransform(pos, body->GetAngle());

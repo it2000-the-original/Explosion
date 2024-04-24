@@ -10,7 +10,7 @@ find_package(box2d CONFIG REQUIRED)
 include(CTest)
 enable_testing()
 
-add_executable(Explosion Main.cpp Engine.cpp Random.cpp)
+add_executable(Explosion Main.cpp Engine.cpp Random.cpp AnimationData.cpp)
 
 target_include_directories(Explosion PRIVATE "include")
 

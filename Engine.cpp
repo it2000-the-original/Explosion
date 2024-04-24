@@ -2,6 +2,7 @@
 #include "Element.hpp"
 #include "Assets.hpp"
 #include "Random.hpp"
+#include "AnimationData.hpp"
 #include "Components.hpp"
 #include "Listener.hpp"
 #include "Background.hpp"
@@ -25,7 +26,7 @@ Listener listener;
 
 auto& playerGroup     = Engine::manager.getGroup(Gplayer);
 auto& asteroidsGroup  = Engine::manager.getGroup(Gasteroids);
-auto& lasersGroup     = Engine::manager.getGroup(Gasteroids);
+auto& lasersGroup     = Engine::manager.getGroup(Glasers);
 auto& debrisGroup     = Engine::manager.getGroup(Gdebris);
 auto& backgroundGroup = Engine::manager.getGroup(Gbackground);
 
@@ -161,9 +162,9 @@ void _loadPlayer() {
     auto& spaceship = Engine::manager.addEntity();
     spaceship.addComponent<Body>(playerBodyDef, playerFixtureDef);
     spaceship.addComponent<Sprite>(Engine::elements["player"]);
-    spaceship.addComponent<Controller>();
     spaceship.addComponent<Teleporter>();
     spaceship.addComponent<Weapon>(Engine::elements["laser"]);
+    spaceship.addMonoBehaviour<Spaceship>();
     Engine::manager.addToGrop(&spaceship, Gplayer);
 }
 

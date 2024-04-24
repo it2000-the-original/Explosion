@@ -28,5 +28,7 @@ const std::vector<Asset> assets = {
     {"assets/textures/debris/meteorBrown_small1.png", "debris3", 28, 28, 0.5f},
     {"assets/textures/debris/meteorBrown_small2.png", "debris4", 29, 26, 0.5f},
     {"assets/textures/debris/meteorBrown_tiny1.png",  "debris5", 18, 18, 0.5f},
-    {"assets/textures/debris/meteorBrown_tiny2.png",  "debris6", 16, 15, 0.5f}
+    {"assets/textures/debris/meteorBrown_tiny2.png",  "debris6", 16, 15, 0.5f},
+
+    {"assets/textures/flame.png", "flame", 14, 31, 0.75f}
 };

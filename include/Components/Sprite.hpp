@@ -6,20 +6,26 @@ private:
 
     Body* body;
 
+    bool show = true;
+
 public:
 
     float width;
     float height;
+    float scale;
+
     sf::Sprite sprite;
 
     Sprite(Element* element) {
 
-        sprite.setTexture(element->texture);
-        sprite.setScale(sf::Vector2f(element->scale, element->scale));
-        sprite.setOrigin(sf::Vector2f(element->width / 2.f, element->height / 2.f));
-
-        width = element->width * element->scale;
+        scale =  element->scale;
+        width =  element->width  * element->scale;
         height = element->height * element->scale;
+        
+        sprite.setTexture(element->texture);
+        sprite.setScale(sf::Vector2f(scale, scale));
+        sprite.setOrigin(sf::Vector2f(width / scale / 2.f, height / scale / 2.f));
+        sprite.setTextureRect(sf::IntRect(0, 0, width / scale, height / scale));
     }
 
     void init() {
@@ -38,6 +44,11 @@ public:
 
     void draw() {
 
-        Engine::window->draw(sprite);
+        if (show) Engine::window->draw(sprite);
+    }
+
+    void hide(bool val) {
+
+        show = !val;
     }
 };
