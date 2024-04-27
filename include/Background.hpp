@@ -36,7 +36,7 @@ public:
             auto& panel = Engine::manager.addEntity();
             panel.addComponent<Body>(backDef);
             panel.addComponent<Sprite>(background);
-            panel.getComponent<Body>().body->SetTransform(pos, 0);
+            panel.getComponent<Body>().setPosition(pos);
             Engine::manager.addToGrop(&panel, Gbackground);
         }
     }

@@ -1,9 +1,8 @@
 #include "Engine.hpp"
-#include "Element.hpp"
 #include "Assets.hpp"
 #include "Random.hpp"
-#include "AnimationData.hpp"
 #include "Components.hpp"
+#include "MonoBehaviour.hpp"
 #include "Listener.hpp"
 #include "Background.hpp"
 
@@ -161,9 +160,9 @@ void _loadPlayer() {
 
     auto& spaceship = Engine::manager.addEntity();
     spaceship.addComponent<Body>(playerBodyDef, playerFixtureDef);
-    spaceship.addComponent<Sprite>(Engine::elements["player"]);
+    spaceship.addComponent<Sprite>("player");
     spaceship.addComponent<Teleporter>();
-    spaceship.addComponent<Weapon>(Engine::elements["laser"]);
+    spaceship.addComponent<Weapon>("laser");
     spaceship.addMonoBehaviour<Spaceship>();
     Engine::manager.addToGrop(&spaceship, Gplayer);
 }
@@ -171,10 +170,16 @@ void _loadPlayer() {
 void _loadAsteroid() {
 
     auto& asteroid = Engine::manager.addEntity();
+
+    b2Vec2 pos = b2Vec2(
+        (rand() % (WW + 1)) / WS, 
+        (rand() % (WH + 1)) / WS
+    );
+
     asteroid.addComponent<Body>(asteroidBodyDef, asteroidFixtureDef);
-    asteroid.addComponent<Sprite>(Engine::elements["meteor"]);
+    asteroid.addComponent<Sprite>("meteor");
     asteroid.addComponent<Teleporter>();
-    asteroid.getComponent<Body>().body->SetTransform(b2Vec2((rand() % (WW + 1)) / WS, (rand() % (WH + 1)) / WS), 0);
-    asteroid.addMonoBehaviour<Asteroid>(3);
+    asteroid.getComponent<Body>().setPosition(pos);
+    asteroid.addMonoBehaviour<Asteroid>();
     Engine::manager.addToGrop(&asteroid, Gasteroids);
 }

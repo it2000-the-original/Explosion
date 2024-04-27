@@ -1,6 +1,8 @@
 #include <map>
 #include <string>
 
+#include "AnimationData.hpp"
+
 using Animations = std::map<std::string, ani::AnimationData>;
 
 class Animation : public Component {
@@ -11,11 +13,10 @@ private:
 
     Animations animations;
 
-    int index = 0;
-    int frames = 1;
-    sf::Time speed;
-
-    int frame = 0;
+    int frame  = 0; // Frame attuale
+    int frames = 1; // Numero di frame
+    int index  = 0; // La riga dello spritesheet
+    sf::Time speed; // Dirata di un frame
 
     bool animating = false;
 
@@ -23,43 +24,9 @@ private:
 
 public:
 
-    void addAnimation(std::string name, int i, int f, int s) {
+    void init();
+    void update();
 
-        ani::AnimationData ani(i, f, s);
-        animations.emplace(name, ani);
-    }
-
-    void playAnimation(std::string name) {
-
-        index = animations[name].index;
-        frames = animations[name].frames;
-        speed = sf::milliseconds(animations[name].speed);
-
-        animating = true;
-        clock.restart();
-    }
-
-    void init() {
-
-        sprite = &entity->getComponent<Sprite>();
-    }
-
-    void update() {
-
-        if (animating and clock.getElapsedTime() >= speed) {
-
-            frame = (frame + 1) % frames;
-
-            sf::IntRect rect(
-                sprite->width  / sprite->scale * frame,
-                sprite->height / sprite->scale * index,
-                sprite->width  / sprite->scale,
-                sprite->height / sprite->scale
-            );
-
-            sprite->sprite.setTextureRect(rect);
-
-            clock.restart();
-        }
-    }
+    void addAnimation(std::string n, int i, int f, int s);
+    void playAnimation(std::string n);
 };

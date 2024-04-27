@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+// Non è alto che un asset caricato
 
 struct Element {
 

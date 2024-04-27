@@ -1,10 +1,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-
 #include <box2d/box2d.h>
-
 #include <iostream>
+
+#include "Element.hpp"
+#include "ECS.hpp"
 
 enum Groups : std::size_t { // Definizione dei gruppi di rendering
 
@@ -22,9 +23,6 @@ enum Categories : int16 { // Definizione dei gruppi di collisione
     Casteroid = 0x0004,
     Cdebris   = 0x0008
 };
-
-struct Element;
-class Manager;
 
 using Elements = std::map<std::string, Element*>;
 

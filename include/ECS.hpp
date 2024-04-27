@@ -14,15 +14,14 @@ class Component;
 class Entity;
 class Manager;
 
-const int MC = 32; // Max Components
-const int MG = 32; // Max Groups
+inline const int MC = 32; // Max Components
+inline const int MG = 32; // Max Groups
 
 using Components = std::vector<std::unique_ptr<Component>>;
-using CBitset = std::bitset<MC>;
-using CArray = std::array<Component*, MC>;
-using GArray = std::array<std::vector<Entity*>, MG>;
-
-using Entities = std::vector<std::unique_ptr<Entity>>;
+using Entities   = std::vector<std::unique_ptr<Entity>>;
+using CBitset    = std::bitset<MC>;
+using CArray     = std::array<Component*, MC>;
+using GArray     = std::array<std::vector<Entity*>, MG>;
 
 inline int getNewComponentID() {
 
@@ -41,10 +40,10 @@ class Component {
 public:
 
 	Entity* entity;         
-	virtual void init() {}
+	virtual void init()   {}
 	virtual void update() {}
-	virtual void draw() {}
-	virtual ~Component() {}
+	virtual void draw()   {}
+	virtual ~Component()  {}
 };
 
 class MonoBehaviour : public Component {
