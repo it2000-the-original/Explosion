@@ -4,10 +4,10 @@ namespace ani {
     struct AnimationData {
 
         AnimationData();
-        AnimationData(int, int, int);
+        AnimationData(int, int, float);
 
         int index;
         int frames;
-        int speed;
+        float speed;
     };
 };

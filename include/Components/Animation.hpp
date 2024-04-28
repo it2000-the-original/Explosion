@@ -27,6 +27,7 @@ public:
     void init();
     void update();
 
-    void addAnimation(std::string n, int i, int f, int s);
+    void addAnimation(std::string n, int i, int f, float s);
     void playAnimation(std::string n);
+    void addAndPlay(std::string n, int i, int f, float s);
 };

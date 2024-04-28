@@ -103,7 +103,7 @@ void Spaceship::setFlameAnimations() {
 
 	auto& animation = flame->getComponent<Animation>();
 
-	animation.addAnimation("base", 0, 2, 100);
+	animation.addAnimation("base", 0, 2, 0.1f);
 	animation.playAnimation("base");
 }
 

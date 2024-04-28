@@ -19,11 +19,20 @@ const Level level3_assets {
     "debris5", "debris6",
 };
 
+const std::string EXP = "explosion";
+const float EXP_time = 1.f;
+const int EXP_frames = 48;
+
 Asteroid::Asteroid() {
 
 	setBodyDef();
 	setFixtureDef();
 	setLevels();
+}
+
+void Asteroid::init() {
+
+	body = &entity->getComponent<Body>();
 }
 
 void Asteroid::update() {
@@ -52,6 +61,8 @@ void Asteroid::explode() {
 
 		launchDebris(Engine::elements[asset]);
 	}
+
+	launchExplosion(Engine::elements[EXP]);
 }
 
 void Asteroid::launchDebris(Element* element) {
@@ -61,11 +72,18 @@ void Asteroid::launchDebris(Element* element) {
 	float aImpulse  = ex::random(maxAImpulse, minAImpulse); // Impulso angolare (rotazione)
 
 	auto& dBody = loadDebris(element).getComponent<Body>(); // Debris body
-	auto& aBody = entity->getComponent<Body>();             // Asteroid body
 
-	dBody.setPosition(aBody.getPosition());
+	dBody.setPosition(body->getPosition());
 	dBody.applyImpulse(impulse, direction);
 	dBody.applyAngularImpulse(aImpulse);
+}
+
+void Asteroid::launchExplosion(Element* element) {
+
+	auto& explosion = loadExplosion(element);	
+
+	explosion.getComponent<Body>().setPosition(body->getPosition());
+	explosion.getComponent<Animation>().addAndPlay("exp", 0, 48, EXP_time / EXP_frames);
 }
 
 Entity& Asteroid::loadDebris(Element* element) {
@@ -81,6 +99,21 @@ Entity& Asteroid::loadDebris(Element* element) {
 	Engine::manager.addToGrop(&debris, Gdebris);
 
 	return debris;
+}
+
+Entity& Asteroid::loadExplosion(Element* element) {
+
+	auto bDef = getExplosionBodyDef();
+	auto fDef = getExplosionFixtureDef();
+
+	auto& explosion = Engine::manager.addEntity();
+	explosion.addComponent<Body>(bDef, fDef);
+	explosion.addComponent<Sprite>(element);
+	explosion.addComponent<Animation>();
+	explosion.addComponent<Destroyer>(EXP_time, false);
+	Engine::manager.addToGrop(&explosion, Glasers);
+
+	return explosion;
 }
 
 void Asteroid::setBodyDef() {
@@ -106,4 +139,23 @@ void Asteroid::setLevels() {
 		level2_assets,
 		level3_assets
 	};
+}
+
+b2BodyDef Asteroid::getExplosionBodyDef() const {
+
+	b2BodyDef definition;
+	definition.type = b2_kinematicBody;
+
+	return definition;
+}
+
+b2FixtureDef Asteroid::getExplosionFixtureDef() const {
+
+	b2FixtureDef definition;
+	definition.density = 1.f;
+	definition.shape = &Engine::elements[EXP]->shape;
+	definition.filter.categoryBits = 0x0000;
+	definition.filter.maskBits = 0x0000;
+
+	return definition;
 }

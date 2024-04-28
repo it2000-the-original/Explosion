@@ -6,6 +6,8 @@ class Asteroid : public MonoBehaviour {
 
 private:
 
+	Body* body;
+
     bool exp = false; // Se true, l'asteroide esploderà
 
     const int number = 3; // Numero dei rottami da scagliare
@@ -21,17 +23,23 @@ private:
     std::vector<Level> levels;
 
 	void launchDebris(Element* element);
+	void launchExplosion(Element* element);
 
     Entity& loadDebris(Element* element);
+	Entity& loadExplosion(Element* element);
 
     void setBodyDef();
 	void setFixtureDef();
 	void setLevels();
 
+	auto getExplosionBodyDef()    const -> b2BodyDef;
+	auto getExplosionFixtureDef() const -> b2FixtureDef;
+
 public:
 
 	Asteroid();
 
+	void init();
     void update();
     void explode();
     void onCollision2D(Entity*);
