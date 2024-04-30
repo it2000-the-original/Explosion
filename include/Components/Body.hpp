@@ -6,6 +6,7 @@ private:
 
     int16 category; // il tipo di oggetto
 
+	b2Vec2 size;
     b2Body* body;
 
 public:
@@ -15,6 +16,7 @@ public:
 
     void init();
 
+	void setSize(b2Vec2);
     void setFixture(b2FixtureDef);
     void setRotation(float);
     void setPosition(b2Vec2);
@@ -24,6 +26,7 @@ public:
     void applyTorque(float);
     void applyAngularImpulse(float);
 
+	auto getSize()      -> b2Vec2;
     auto getPosition()  -> b2Vec2;
     auto getRotation()  -> float;
     auto getVelocity()  -> float;

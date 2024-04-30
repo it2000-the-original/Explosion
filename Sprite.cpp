@@ -30,6 +30,10 @@ Sprite::Sprite(std::string name) {
 void Sprite::init() {
 
     body = &entity->getComponent<Body>();
+
+	b2Vec2 sz(width / WS, height / WS);
+
+	body->setSize(sz);
 }
 
 void Sprite::update() {

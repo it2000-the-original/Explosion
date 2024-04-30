@@ -12,7 +12,7 @@ Engine engine;
 int main(int argc, char* argv[]) {
 
     std::cout << "Explosion - versione 0.1 - it2000" << std::endl;
-    std::cout << "Per spawnare un asteroide, premere il tasto \"M\"";
+    std::cout << "Per spawnare un asteroide, premere il tasto \"M\"" << std::endl;
 
     srand(time(NULL));
 

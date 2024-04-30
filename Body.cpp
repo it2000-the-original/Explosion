@@ -18,6 +18,11 @@ void Body::init() {
 
 }
 
+void Body::setSize(b2Vec2 sz) {
+
+	size = sz;
+}
+
 void Body::setFixture(b2FixtureDef fix) {
 
     body->CreateFixture(&fix);
@@ -80,6 +85,11 @@ void Body::applyTorque(float torque) {
 void Body::applyAngularImpulse(float impulse) {
 
     body->ApplyAngularImpulse(impulse, true);
+}
+
+b2Vec2 Body::getSize() {
+
+	return size;
 }
 
 b2Vec2 Body::getPosition() {

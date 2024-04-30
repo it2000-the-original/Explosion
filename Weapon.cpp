@@ -40,7 +40,7 @@ Entity& Weapon::loadLaser() {
 	
 	laser.addComponent<Body>      (getBodyDef(), getFixtureDef());
 	laser.addComponent<Sprite>    (element);
-	laser.addComponent<Teleporter>(false);
+	laser.addComponent<Teleporter>();
 	laser.addComponent<Destroyer> (0.35f);
 
 	Engine::manager.addToGrop(&laser, Glasers);

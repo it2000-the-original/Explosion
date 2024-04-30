@@ -160,8 +160,8 @@ void _loadPlayer() {
 
     auto& spaceship = Engine::manager.addEntity();
     spaceship.addComponent<Body>(playerBodyDef, playerFixtureDef);
-    spaceship.addComponent<Sprite>("player");
     spaceship.addComponent<Teleporter>();
+    spaceship.addComponent<Sprite>("player");
     spaceship.addComponent<Weapon>("laser");
     spaceship.addMonoBehaviour<Spaceship>();
     Engine::manager.addToGrop(&spaceship, Gplayer);
