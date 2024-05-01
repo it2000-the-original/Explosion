@@ -16,6 +16,7 @@ add_executable(Explosion
     Engine.cpp
     Random.cpp
     AnimationData.cpp 
+	ExplosionsLoader.cpp
 	Listener.cpp
     Body.cpp
     Sprite.cpp

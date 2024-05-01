@@ -5,13 +5,14 @@
 #include "MonoBehaviour.hpp"
 #include "Listener.hpp"
 #include "Background.hpp"
+#include "ExplosionsLoader.hpp"
 
 b2BodyDef playerBodyDef;
 b2BodyDef asteroidBodyDef;
 b2FixtureDef playerFixtureDef;
 b2FixtureDef asteroidFixtureDef;
 
-b2PolygonShape loadShape(std::vector<sf::Vector2i> _shape, float w, float h, float s);
+auto loadShape(std::vector<sf::Vector2i>, float, float, float) -> b2PolygonShape;
 void _setDefaultPlayerSettings();
 void _setDefaultAsteroidSettings();
 void _loadPlayer();
@@ -37,6 +38,7 @@ void Engine::init() {
     world->SetContactListener(&listener);
     loadElements();
 
+	ExplosionsLoader::init();
     Background background("background");
     background.drawBackground();
 
@@ -109,25 +111,24 @@ void Engine::loadElements() {
     }
 }
 
-b2PolygonShape loadShape(std::vector<sf::Vector2i> _shape, float w, float h, float s) {
+b2PolygonShape loadShape(std::vector<sf::Vector2i> sh, float w, float h, float s) {
 
     b2PolygonShape shape;
 
-    if (!_shape.empty()) {
+    if (!sh.empty()) {
 
-        b2Vec2 verts[_shape.size()];
+        b2Vec2 verts[sh.size()];
 
-        for (int i = 0; i < _shape.size(); i++) {
+        for (int i = 0; i < sh.size(); i++) {
 
             b2Vec2 p(
-                (float(_shape[i].x) - w / 2.f) * s / WS,
-                -(float(_shape[i].y) - h / 2.f) * s / WS
+                +(float(sh[i].x) - w / 2.f) * s / WS,
+                -(float(sh[i].y) - h / 2.f) * s / WS
             );
 
             verts[i].x = p.x; verts[i].y = p.y;
-        }
 
-        shape.Set(verts, _shape.size());
+        } shape.Set(verts, sh.size());
     }
 
     else shape.SetAsBox(w * s / WS / 2.f, h * s / WS / 2.f);
