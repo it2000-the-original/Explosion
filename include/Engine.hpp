@@ -19,10 +19,10 @@ enum Groups : std::size_t { // Definizione dei gruppi di rendering
 enum Categories : int16 { // Definizione dei gruppi di collisione
 
 	Cnone     = 0x0000,
-    Cplayer   = 0x0001,
-    Claser    = 0x0002,
-    Casteroid = 0x0004,
-    Cdebris   = 0x0008
+	Cplayer   = 0x0001,
+	Claser    = 0x0002,
+	Casteroid = 0x0004,
+	Cdebris   = 0x0008
 };
 
 using Elements = std::map<std::string, Element*>;

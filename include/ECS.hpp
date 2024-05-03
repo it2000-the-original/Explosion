@@ -50,9 +50,9 @@ class MonoBehaviour : public Component {
 
 public:
 
-	virtual void onCollision2D(Entity* _entity) {}
-	virtual void inCollision2D(Entity* _entity) {}
-	virtual void afterCollision2D(Entity* _entity) {}
+	virtual void onCollision2D(Entity*) {}
+	virtual void inCollision2D(Entity*) {}
+	virtual void afCollision2D(Entity*) {}
 };
 
 

@@ -30,6 +30,6 @@ const std::vector<Asset> assets = {
     {"assets/textures/debris/meteorBrown_tiny1.png",  "debris5", 18, 18, 0.5f},
     {"assets/textures/debris/meteorBrown_tiny2.png",  "debris6", 16, 15, 0.5f},
 
-    {"assets/textures/flame.png",     "flame",     14,  31,  0.5f},
-	{"assets/textures/explosion.png", "explosion", 256, 256, 1.f}
+    {"assets/textures/flame.png",     "flame",      14,  31,  0.5f},
+	{"assets/textures/explosion.png", "explosion",  256, 256, 1.f},
 };

@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include "Components.hpp"
+#include "ExplosionsLoader.hpp"
 
 #include "MonoBehaviour/Spaceship.hpp"
 
@@ -19,6 +20,16 @@ void Spaceship::update() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) rotateLeft();  else slowsLeftRotation();
 
 	setFlamePosition();
+
+	if (exp) explode();
+}
+
+void Spaceship::onCollision2D(Entity* e) {
+
+	if (e->getComponent<Body>().getCategory() == Casteroid) {
+
+		exp = true;
+	}
 }
 
 void Spaceship::moveForward() {
@@ -118,4 +129,14 @@ void Spaceship::setFlamePosition() {
 
 	flameBody.setPosition(pos);
 	flameBody.setRotation(body->getRotation() + M_PI);
+}
+
+void Spaceship::explode() {
+
+	entity->destroy();
+	flame->destroy();
+
+	ExplosionDef expDef {"explosion", 48, 0.02f};
+
+	ExplosionsLoader::loadExplosion(expDef, body->getPosition());
 }

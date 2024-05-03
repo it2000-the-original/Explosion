@@ -5,15 +5,6 @@
 
 #include "MonoBehaviour/Asteroid.hpp"
 
-const explosion::Debris debris = {
-
-	{ "debris1", "debris2"},
-	{ "debris3", "debris4"},
-	{ "debris5", "debris6"}
-};
-
-ExplosionDef expDef {"explosion", 48, 0.02f, debris, 3};
-
 void Asteroid::init() {
 
 	body = &entity->getComponent<Body>();
@@ -26,16 +17,28 @@ void Asteroid::update() {
 
 void Asteroid::onCollision2D(Entity* e) {
 
-	if (e->getComponent<Body>().getCategory() == Claser) {
+	switch(e->getComponent<Body>().getCategory()) {
 
-		e->destroy();
-		exp = true;
+	case Claser: exp = true;
+
+		e->destroy(); break;
+
+	case Cplayer: exp = true;
 	}
 }
 
 void Asteroid::explode() {
 
 	entity->destroy();
+
+	const explosion::Debris debris = {
+
+		{ "debris1", "debris2" },
+		{ "debris3", "debris4" },
+		{ "debris5", "debris6" }
+	};
+
+	ExplosionDef expDef {"explosion", 48, 0.02f, debris, 3};
 
 	ExplosionsLoader::loadExplosion(expDef, body->getPosition());
 }

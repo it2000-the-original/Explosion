@@ -21,9 +21,9 @@ class ExplosionsLoader {
 private:
 
 	static const float minImpulse;  // Impulso massimo applicabile ai detriti
-    static const float maxImpulse;  // Impulso minimo
-    static const float minAImpulse; // Impulso angolare massimo
-    static const float maxAImpulse; // Impulso angolare minimo
+	static const float maxImpulse;  // Impulso minimo
+	static const float minAImpulse; // Impulso angolare massimo
+	static const float maxAImpulse; // Impulso angolare minimo
 
 	static b2BodyDef dBDef;    // Definitione del corpo dei detriti
 	static b2BodyDef eBDef;    // Definizione del corpo dell'esplosione
