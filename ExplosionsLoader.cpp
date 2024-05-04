@@ -20,7 +20,7 @@ void ExplosionsLoader::loadExplosion(ExplosionDef def, b2Vec2 pos) {
 	for (int i = 0; i < def.debris.size();              i++)
 	for (int j = 0; j < pow(def.debrisQuantity, i + 1); j++) {
 
-		int ID = ex::random(int(def.debris[i].size() - 1));
+		int ID = ex::random(int(def.debris[i].size() - 1)); // la scelta dell'elemento è sempre casuale
 
 		std::string asset = def.debris[i][ID];
 
@@ -66,7 +66,7 @@ Entity& ExplosionsLoader::_loadDebris(std::string e) {
 	auto& debris = Engine::manager.addEntity();
 
 	debris.addComponent<Body>(dBDef, dFDef);
-	debris.addComponent<Sprite>(Engine::elements[e]);
+	debris.addComponent<Sprite>(e);
 	debris.addComponent<Destroyer>(2.f);
 
 	Engine::manager.addToGrop(&debris, Gdebris);
@@ -94,7 +94,7 @@ void ExplosionsLoader::_launchDebris(std::string e, b2Vec2 pos) {
 
 	auto& body = _loadDebris(e).getComponent<Body>();
 
-	float direction = ex::random(360);
+	float direction = ex::random(360);                      // direzione in cui il detrito viene scagliato
 	float impulse   = ex::random(minImpulse,  maxImpulse);  // Impulso direzionale
 	float aImpulse  = ex::random(maxAImpulse, minAImpulse); // Impulso angolare (rotazione)
 

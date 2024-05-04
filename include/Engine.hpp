@@ -25,7 +25,7 @@ enum Categories : int16 { // Definizione dei gruppi di collisione
 	Cdebris   = 0x0008
 };
 
-using Elements = std::map<std::string, Element*>;
+using Elements = std::map<std::string, std::unique_ptr<Element>>;
 
 const int FPS = 60;
 const float frameDelay = 1.f / FPS;
@@ -55,6 +55,8 @@ public:
     static Elements elements;
     static Manager manager;
     static b2World* world;
+
+	~Engine();
 
 private:
 

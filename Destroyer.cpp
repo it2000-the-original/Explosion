@@ -24,9 +24,9 @@ void Destroyer::update() {
 
 void Destroyer::setTransparency() {
 
-	// Con questa funzione la transparenza di uno sprite,
-	// progredisce in base al tempo rimanente prima della
-	// distruzione, usando una semplice proporzione
+	// Con questa funzione, usando una semlice proporzione,
+	// la transparenza di uno sprite progredisce in base al 
+	// tempo rimanente prima della distruzine
 
 	auto color = sprite->sprite.getColor();
 

@@ -1,5 +1,11 @@
+// Questa classe contiene l'algoritmo vero e proprio diguardante la sfida
 
-inline namespace explosion {
+namespace explosion {
+
+	// Un livello non è altro che una lista di elementi
+	// casuali ma aventi più o meno tutti la stessa massa.
+	// più si va avanti di livello, più gli oggetti sono
+	// numerosi e meno massicci
 
 	using Level  = std::vector<std::string>;
 	using Debris = std::vector<Level>;
@@ -11,6 +17,9 @@ struct ExplosionDef {
 
 	int frames;  // Frames number
 	float speed; // Frame time
+
+	// l'utilizzo dei detriti non è obbligatorio,
+	// è possibile lasciarli vuoti per non usarli
 
 	explosion::Debris debris;
 	int debrisQuantity;

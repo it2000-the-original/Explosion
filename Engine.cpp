@@ -111,6 +111,12 @@ void Engine::loadElements() {
     }
 }
 
+Engine::~Engine() {
+
+	delete window;
+	delete world;
+}
+
 b2PolygonShape loadShape(std::vector<sf::Vector2i> sh, float w, float h, float s) {
 
     b2PolygonShape shape;

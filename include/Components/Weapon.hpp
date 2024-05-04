@@ -10,7 +10,7 @@ private:
 
     const float velocity = 10.f;
 
-    Element* element; // Elemento del laser
+    std::string element; // Elemento del laser
 
     bool fired = false; // per evitare problemi nel caso si tenesse premuta la spacebar
 

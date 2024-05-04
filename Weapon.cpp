@@ -3,7 +3,7 @@
 
 Weapon::Weapon(std::string name) 
 
-	:element(Engine::elements[name]) {};
+	:element(name) {};
 
 void Weapon::init() {
 
@@ -52,7 +52,7 @@ b2FixtureDef Weapon::getFixtureDef() {
 
 	b2FixtureDef def;
 
-	def.shape = &element->shape;
+	def.shape = &Engine::elements[element]->shape;
 	def.friction    = 0.f;
 	def.restitution = 0.f;
 	def.density     = 0.001f;

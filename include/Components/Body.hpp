@@ -4,9 +4,9 @@ class Body : public Component {
 
 private:
 
-    int16 category; // il tipo di oggetto
+    int16 category; // la categoria dell'oggetto
 
-	b2Vec2 size;
+	b2Vec2 size;  // dimensioni dell'oggetto
     b2Body* body;
 
 public:

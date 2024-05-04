@@ -1,21 +1,9 @@
 #include "Engine.hpp"
 #include "Components.hpp"
 
-Sprite::Sprite(Element* element) {
-
-    scale =  element->scale;
-    width =  element->width  * element->scale;
-    height = element->height * element->scale;
-        
-    sprite.setTexture(element->texture);
-    sprite.setScale(sf::Vector2f(scale, scale));
-    sprite.setOrigin(sf::Vector2f(width / scale / 2.f, height / scale / 2.f));
-    sprite.setTextureRect(sf::IntRect(0, 0, width / scale, height / scale));
-}
-
 Sprite::Sprite(std::string name) {
 
-	auto element = Engine::elements[name];
+	auto element = Engine::elements[name].get();
 
     scale =  element->scale;
     width =  element->width  * element->scale;

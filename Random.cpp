@@ -1,5 +1,8 @@
 #include <random>
 
+// Niente di particolare, una lista di funzioni
+// per generare numeri casuali più facilmente
+
 #include "Random.hpp"
 
 int ex::random(int x) {

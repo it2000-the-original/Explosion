@@ -18,6 +18,7 @@ add_executable(Explosion
     AnimationData.cpp 
 	ExplosionsLoader.cpp
 	Listener.cpp
+	Background.cpp
     Body.cpp
     Sprite.cpp
     Animation.cpp

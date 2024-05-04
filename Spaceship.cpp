@@ -102,7 +102,7 @@ void Spaceship::loadFlame() {
 
 	flame = &Engine::manager.addEntity();
 	flame->addComponent<Body>(bodyDef, fixDef);
-	flame->addComponent<Sprite>(Engine::elements["flame"]);
+	flame->addComponent<Sprite>("flame");
 	flame->addComponent<Animation>();
 
 	Engine::manager.addToGrop(flame, Glasers);
